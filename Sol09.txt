@@ -1,4 +1,19 @@
-# TODO how to temporarily stop kube-scheduler-cluster2-controlplane1? using systemctl?
+kubectl config use-context k8s-c2-AC
 
+# TODO how to temporarily stop kube-scheduler-cluster2-controlplane1? using systemctl?
+🌟 ssh cluster2-master1
+k get po -n kube-system | grep -i kube-scheduler
+cd /etc/kubernetes/manifests
+ls -lrt 
+# move or delete the kube-scheduler.yaml file
+mv ./kube-scheduler.yaml ../
+ls -lrt
+ls -lrt ../kube-scheduler.yaml
+k get po -n kube-system | grep -i kube-scheduler
 
 # TODO how to restart kube-scheduler-cluster2-controlplane1
+🌟 
+cd /ect/kubernetes/
+mv kube-scheduler.yaml manifests/kube-scheduler.yaml
+k get po -n kube-system kube-scheduler-cluster2-master1 --watch
+k get po manual-schedule

@@ -20,7 +20,9 @@ spec:
     readinessProbe:
       exec:
         command:
-        - wget -T2 -O- http://service-am-i-ready:80 
+        - sh                                         # 🌟 
+        - -c                                         # 🌟 
+        - wget -T2 -O- http://service-am-i-ready:80  # 🌟  
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}

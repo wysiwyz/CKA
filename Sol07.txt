@@ -5,3 +5,6 @@ EOF
 cat <<EOF> /opt/course/7/pod.sh
 kubectl top pods
 EOF
+
+🌟 k top po --containers
+   to show container resources utilization (for pod with multi containers)
