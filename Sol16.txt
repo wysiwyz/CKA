@@ -1,0 +1,30 @@
+kubectl config use-context k8s-c1-H
+
+# TODO confirm that -o custom-columns=.metadata.name is not required
+k get secret,cm,all -A > /opt/course/16/resources.txt
+
+# TODO how to filter namespace by prefix? e.g. `project-hippo`, `project-ox` with prefix `project-*`
+
+
+# TODO how to find the ns with the highest number of roles? 
+# TODO how to count numbers of roles per ns?
+
+echo "<name-of-the-ns> <amount-of-roles>" > /opt/course/16/crowded-namespace.txt
+
+
+
+# answers from chatgpt, not from me
+
+kubectl get roles --all-namespaces -o json | jq -r '.items[] | .metadata.namespace' | sort | uniq -c
+kubectl get roles --all-namespaces -o json | jq -r '.items[] | .metadata.namespace' | sort | uniq -c | sort -nr | head -n 1
+
+
+jq -r 的 `-r` : -r for --raw-output，輸出原始（未加引號）的數據
+
+`sort | uniq -c` : 
+    - sort : 對輸入行按字母或數字順序排序
+    - uniq -c : 在每一行結果的開頭加上計數，表示此行出現幾次
+
+`sort -nr` : 根據 role 數量進行降序排列
+
+`head -n 1` : 取得 role 數量最多的 namespace

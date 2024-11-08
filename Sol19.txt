@@ -1,0 +1,53 @@
+kubectl config use-context k8s-c3-CCC
+
+k -n secret run secret-pod --image busybox:1.31.1 -- /bin/sh -c sleep 4800
+
+k -n secret create -f /opt/course/19/secret1.yaml
+
+k -n secret get secret
+
+k -n secrete get po secret-pod -o yaml > secretpod.yaml
+
+vi secretpod.yaml
+...
+spec:
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: <name-of-the-secret>
+  containers:
+  - name: busybox
+    image: busybox:1.31.1
+    volumeMounts:
+    - name: secret-volume
+      mountPath: /tmp/secret1
+...
+
+export now='--force --grace-period=0'
+k replace $now -f secretpod.yaml
+
+k -n secret create secret secret2 --from-literal=user=user1 --from-literal=pass=1234
+
+vi secretpod.yaml
+...
+spec:
+  containers:
+  - name: busybox
+    image: busybox:1.31.1
+    env:
+    - name: APP_USER
+      valueFrom:
+      secretKeyRef: 
+        name: secret2
+        key: user
+    - name: APP_PASS
+      valueFrom:
+      secretKeyRef: 
+        name: secret2
+        key: pass
+...
+k replace $now -f secretpod.yaml
+
+
+
+https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/

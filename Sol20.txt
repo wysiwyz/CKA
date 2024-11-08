@@ -1,0 +1,18 @@
+kubectl config use-context k8s-c3-CCC
+
+k get no -o wide
+# find out the kubernetes versions on both cluster3-node2 and cluster3-controlplane1
+
+ssh cluster3-node2
+
+kubeadm version
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade apply v1.xx.xx
+
+# TODO how to had the node cluster3-controlplane1 to the cluster using kubeadm?
+kubeadm join <control-plane-host>:<control-plane-port>
+
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/
+https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/

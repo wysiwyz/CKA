@@ -1,0 +1,31 @@
+```bash
+
+kubectl config use-context k8s-c1-H
+
+k -n project-hamster run po p2-pod --image nginx:1.21.3-alpine --dry-run=client -o yaml > pq2.yaml
+
+vi pq2.yaml
+...
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.21.3-alpine
+  - name: busybox
+    image: busybox:1.31
+    command: 
+    - /bin/sh
+    - -c
+    args:
+    - sleep
+    - 4000
+...
+k create -f pq2.yaml
+
+k -n project-hamster expose po p2-pod --type=ClusterIP --name=p2-service --port=3000 --target-port=80 
+# TODO "on port 3000->80" which is target-port?
+
+k -n kube-system get po -owide
+# Find out the kubey-proxies names and 
+# TODO how to use crictl and check that these are using iptables 
+
+# TODO iptables rules of p2-service (all nodes)

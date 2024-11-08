@@ -1,0 +1,42 @@
+kubectl config use-context k8s-c1-H
+
+
+vi 12.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    id: very-important
+    app: deploy-important
+  name: deploy-important
+  namespace: project-tiger
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      id: very-important
+      app: deploy-important
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        id: very-important
+        app: deploy-important
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector: {}
+            topologyKey: "kubernetes.io/hostname" # TODO need revise
+      containers:
+      - image: nginx:1.17.6-alpine
+        name: container1
+      - image: google/pause
+        name: container2
+
+
+
+https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/

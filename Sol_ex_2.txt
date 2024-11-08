@@ -1,0 +1,21 @@
+kubectl config use-context k8s-c1-H
+
+k -n project-hamster describe sa secret-reader
+
+k -n project-hamster run tmp-api-contact --image curlimages/curl:7.65.3 --dry-run=client -oyaml > exq2.yaml
+vi exq2.yaml
+...
+spec:
+  serviceAccount: secret-reader
+  containers:
+  - name: curlimages
+    image: curlimages/curl:7.65.3
+    command: 
+    - sleep 
+    - 4000
+...
+k create -f exq2.yaml
+
+# how to access the kubernetes api of that cluster with curl cmd
+k -n project-hamster exec -it tmp-api-contact -- curl 127.0.0.1:6443/api/v1/secrets
+echo "kubectl -n project-hamster exec -it tmp-api-contact -- curl 127.0.0.1:6443/api/v1/secrets" > /opt/course/e4/list-secrets.sh

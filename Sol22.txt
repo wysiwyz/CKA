@@ -1,0 +1,18 @@
+kubectl config use-context k8s-c2-AC
+
+ssh cluster2-controlplane1
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep -i server.controlplane1
+
+# TODO get the exp date by decode the server.crt with openssl (I guess)
+openssl x509  -noout -text -in <path-to-server-cert-file>/server.crt
+
+# copied the expiration date from above result
+echo "<paste-the-expired-date-found>" > /opt/course/22/expiration
+
+echo "kubeadm certs check-expiration" > /opt/course/22/kubeadm-renew-certs.sh
+
+
+
+https://kubernetes.io/docs/tasks/administer-cluster/certificates/
+https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+https://kubernetes.io/docs/setup/best-practices/certificates/#server-certificates

@@ -1,0 +1,27 @@
+kubectl config use-context k8s-c3-CCC
+
+ssh cluster3-controlplane1
+
+cd /etc/kubernetes/manifests/
+
+k -n default run my-static-pod --image nginx:1.16-alpine --dry-run=client -o yaml > my-static-pod.yaml
+vi my-static-pod.yaml
+...
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.16-alpine
+    resource:     # add the resource requests
+      requests:
+        cpu: 10m
+        memory: 20Mi
+...
+
+exit
+
+k -n default expose po my-static-pod --port 80 --name static-pod-service --type NodePort
+
+k -n default get ep
+k -n default get po my-static-pod -o wide
+
+# TODO check if the internal node IP of cluster3-controlplane1 is reachable from k8s@terminal

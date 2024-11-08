@@ -1,0 +1,14 @@
+kubectl config use-context k8s-c1-H
+
+k -n project-c13 get pods
+
+# TODO how to find out pods that will be terminated first?
+
+
+cat <<EOF > /opt/course/e1/pods-not-stable.txt
+?
+?
+?
+EOF
+
+https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/

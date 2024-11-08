@@ -1,0 +1,12 @@
+cat <<EOF> /opt/course/14/cluster-info
+1: $(k get no --selector=role=controlplane)  1
+
+2: $(k get no --selector=role= without controlplane mark)  2
+
+3: $(cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep -i <something-like-service-cluster-ip>) # TODO Service CIDR
+
+4: weave-net /etc/net.d/list # TODO CNI plugin name and its config file
+
+5: -<name-of-the-cluster1-node1>
+
+EOF

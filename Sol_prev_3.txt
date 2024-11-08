@@ -1,0 +1,13 @@
+kubectl config use-context k8s-c2-AC
+
+k -n default run check-ip --image httpd:2.4.41-alpine --port 80
+k -n default expose po check-ip --type ClusterIP --name check-ip-service --port 80
+
+# TODO how to change service CIDR for the cluster
+vi /etc/kubernetes/manifests/kube-apiserver.yaml
+At -–service-cluster-ip-range, change the value to 11.96.0.0/12
+
+k -n default expose po check-ip --type ClusterIP --name check-ip-service2 --port 80
+
+
+https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/

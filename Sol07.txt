@@ -1,0 +1,7 @@
+cat <<EOF> /opt/course/7/node.sh
+kubectl top nodes
+EOF
+
+cat <<EOF> /opt/course/7/pod.sh
+kubectl top pods
+EOF

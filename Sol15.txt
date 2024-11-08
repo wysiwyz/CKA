@@ -1,0 +1,15 @@
+kubectl config use-context k8s-c2-AC
+
+echo "kubectl get events --sort-by=.metadata.creationTimestamp" > /opt/course/15/cluster_events.sh
+
+k get po -n kube-system -o wide
+# find the name of the kube-proxy pod scheduled on cluster2-node1 
+
+export now='--force --grace-period=0'
+k -n kube-system delete po <name-of-the-kube-proxy-foun> $now
+
+
+# TODO check the latest event and echo "<that-new-line-of-event>" > /opt/course/15/pod_kill.log
+
+
+# TODO kill the containerd container of the kubeproxy pod and echo "<that-new-line-of-event>" > /opt/course/15/container_kill.log

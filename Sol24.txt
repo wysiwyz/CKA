@@ -1,0 +1,31 @@
+kubectl config use-context k8s-c1-H
+
+k -n project-snake get po --show-labels
+# check if the pods of prefix `backend-*` share the same labels
+# check if the pods of prefix `db1-*` share the same labels
+# check if the pods of prefix `db2-*` share the same labels
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: multi-port-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      type: backend-*
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              type: db1 # TODO
+        - podSelector:
+            matchLabels:
+              type: db2 # TODO
+      ports:
+      - protocol: TCP
+        port: 1111
+      - protocol: TCP
+        port: 2222

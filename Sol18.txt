@@ -1,0 +1,10 @@
+kubectl config use-context k8s-c3-CCC
+
+k describe node cluster3-node1
+
+ssh cluster3-node1
+
+# TODO reason of the issue being?
+
+
+# TODO run a pod with spec.nodeName: cluster3-node1 for verification

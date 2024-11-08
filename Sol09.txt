@@ -1,0 +1,4 @@
+# TODO how to temporarily stop kube-scheduler-cluster2-controlplane1? using systemctl?
+
+
+# TODO how to restart kube-scheduler-cluster2-controlplane1

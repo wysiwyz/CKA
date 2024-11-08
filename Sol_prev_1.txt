@@ -1,0 +1,31 @@
+kubectl config use-context k8s-c2-AC
+
+Server private key location
+  
+--> cat /etc/kubernetes/manifests/etcd.yam | grep -i key-file
+
+Server certificate expiration date
+  
+--> cat /etc/kubernetes/manifests/etcd.yam | grep -i cert-file
+
+--> cat this cert-file to find out the exp date
+
+Is client certificate authentication enabled
+
+--> No idea, check if there exists `--client-cert-auth`?
+
+```
+cat << EOF > /opt/course/p1/etcd-info.txt
+key-file
+exp date
+yes/no
+```
+
+```
+ssh cluster2-controlplane
+ETCDCTL_API=3 etcdctl snapshot save /etc/etcd-snapshot.db \
+  --endpoints=127.0.0.1:2379
+  --cacert=/etc/kubernetes/etcd/pki/ca.crt
+  --cert=/etc/kubernetes/etcd/pki/server.crt
+  --key=/etc/kubernetes/etcd/pki/server.key
+```

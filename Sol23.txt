@@ -1,0 +1,22 @@
+kubectl config use-context k8s-c2-AC
+
+kubectl describe no cluster2-node1
+
+ssh cluster2-node1
+
+cd /var/lib/kubelet
+
+cd /etc/kubernetes/ or cd /etc/kubernetes/manifests/ 
+# to find out the location fo kubelet config file
+
+# TODO find kubelete client cert and server cert
+
+# client cert: outgoing to the kube-apiserver
+/etc/kubernetes/pki/kubelet-client.crt
+
+# server cert: incoming from the kube-apiserver
+/etc/kubernetes/pki/apiserver.crt
+
+
+
+https://kubernetes.io/docs/setup/best-practices/certificates/
